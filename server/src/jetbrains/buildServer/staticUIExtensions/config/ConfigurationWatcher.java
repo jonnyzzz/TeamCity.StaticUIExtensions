@@ -31,10 +31,13 @@ import java.util.Collection;
 public class ConfigurationWatcher {
   private final FileWatcher myConfigWatcher;
   @NotNull
+  private final Configuration myConfig;
+  @NotNull
   private final Collection<ConfigurationChangeListener> myListeners;
 
   public ConfigurationWatcher(@NotNull final Configuration config,
                               @NotNull final Collection<ConfigurationChangeListener> listeners) {
+    myConfig = config;
     myListeners = listeners;
     myConfigWatcher = new FileWatcher(config.getConfigurationXml());
     myConfigWatcher.setSleepingPeriod(5000);
@@ -55,6 +58,7 @@ public class ConfigurationWatcher {
   }
 
   private void configurationFileChanged() {
+    if (!myConfig.getConfigurationXml().isFile()) return;
     for (ConfigurationChangeListener listener : myListeners) {
       listener.configurationChanged();
     }
