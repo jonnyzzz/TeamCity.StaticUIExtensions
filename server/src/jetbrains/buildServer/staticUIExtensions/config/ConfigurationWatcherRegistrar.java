@@ -18,7 +18,6 @@ package jetbrains.buildServer.staticUIExtensions.config;
 
 import jetbrains.buildServer.serverSide.BuildServerAdapter;
 import jetbrains.buildServer.serverSide.BuildServerListener;
-import jetbrains.buildServer.serverSide.SRunningBuild;
 import jetbrains.buildServer.util.EventDispatcher;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +30,7 @@ public class ConfigurationWatcherRegistrar {
                                        @NotNull final ConfigurationWatcher watcher) {
     event.addListener(new BuildServerAdapter(){
       @Override
-      public void buildStarted(SRunningBuild build) {
+      public void serverStartup() {
         watcher.startWatching();
       }
 
