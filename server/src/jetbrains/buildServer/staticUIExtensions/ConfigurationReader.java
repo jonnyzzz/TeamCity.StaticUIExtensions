@@ -63,12 +63,24 @@ public class ConfigurationReader {
       final List<UrlMatcher> matchers = new ArrayList<UrlMatcher>();
       for (Object url : xmlRule.getChildren("url")) {
         final Element xmlUrl = (Element) url;
-        final String startsWith = xmlUrl.getAttributeValue("startsWith");
-        if (StringUtil.isEmptyOrSpaces(startsWith)) {
-          throw new ConfigurationException("Unknown url matcher: " + xmlUrl);
+
+        final List<UrlMatcher> childMatch = new ArrayList<UrlMatcher>();
+
+        final String startsWith = xmlUrl.getAttributeValue("starts");
+        if (!StringUtil.isEmptyOrSpaces(startsWith)) {
+          childMatch.add(new StartsWithMatcher(startsWith.trim()));
         }
 
-        matchers.add(new StartsWithMatcher(startsWith.trim()));
+        final String equals = xmlUrl.getAttributeValue("equals");
+        if (!StringUtil.isEmptyOrSpaces(equals)) {
+          childMatch.add(new EqualsMatcher(equals.trim()));
+        }
+
+        if (childMatch.isEmpty()) {
+          throw new ConfigurationException("No url matching rules found: " + xmlUrl);
+        }
+
+        matchers.add(new AndMatcher(childMatch));
       }
 
       result.add(new Rule(new OrMatcher(matchers), place, content));
