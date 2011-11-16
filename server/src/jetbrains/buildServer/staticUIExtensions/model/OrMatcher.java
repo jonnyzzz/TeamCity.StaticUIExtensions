@@ -35,7 +35,7 @@ public class OrMatcher implements UrlMatcher {
     for (UrlMatcher matcher : myMatchers) {
       if (matcher.matches(url)) return true;
     }
-    return false;
+    return myMatchers.isEmpty();
   }
 
   @Override

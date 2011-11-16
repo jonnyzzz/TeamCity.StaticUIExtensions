@@ -101,7 +101,7 @@ public class ConfigurationReader {
         matchers.add(new AndMatcher(childMatch));
       }
 
-      result.add(new Rule("_" + result.size(), new OrMatcher(matchers), place, content));
+      result.add(new Rule("_" + result.size(), matchers.isEmpty() ? new TrueMatcher() : new OrMatcher(matchers), place, content));
     }
     return result;
   }
