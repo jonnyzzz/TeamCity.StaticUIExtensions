@@ -40,9 +40,9 @@ public class StaticContentController extends BaseController {
   private final Configuration myConfig;
 
   public StaticContentController(@NotNull final AuthorizationInterceptor auth,
-                                        @NotNull final WebControllerManager web,
-                                        @NotNull final ControllerPaths paths,
-                                        @NotNull final Configuration config) {
+                                 @NotNull final WebControllerManager web,
+                                 @NotNull final ControllerPaths paths,
+                                 @NotNull final Configuration config) {
     myPaths = paths;
     myConfig = config;
     final String path = paths.getResourceControllerRegistrationBase() + "/**";
