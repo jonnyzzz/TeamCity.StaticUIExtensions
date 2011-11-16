@@ -2,7 +2,7 @@
 <teamcity-static-ui-extensions>
 
   <rule place-id="ALL_PAGES_HEADER" html-file="header.html">
-     <url startsWith="overview.html" />
+     <url starts="overview.html" />
   </rule>
                                                                             
   <rule place-id="ALL_PAGES_FOOTER" html-file="footer.html" css-file="footer.css" js-file="footer.js" />

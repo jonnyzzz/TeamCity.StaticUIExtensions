@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
   <settings default="">
     <module2copyright>
-      <element module="All" copyright="JetBrains open-sourced" />
+      <element module="All" copyright="JetBrains open-surced" />
     </module2copyright>
     <LanguageOptions name="JSPX">
       <option name="fileTypeOverride" value="1" />
