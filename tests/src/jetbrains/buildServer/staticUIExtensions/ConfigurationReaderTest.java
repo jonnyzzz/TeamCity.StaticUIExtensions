@@ -17,6 +17,7 @@
 package jetbrains.buildServer.staticUIExtensions;
 
 import jetbrains.buildServer.BaseTestCase;
+import jetbrains.buildServer.staticUIExtensions.config.ConfigurationReader;
 import jetbrains.buildServer.staticUIExtensions.model.Rule;
 import jetbrains.buildServer.web.openapi.PlaceId;
 import org.testng.Assert;

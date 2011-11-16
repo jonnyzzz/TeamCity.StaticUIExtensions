@@ -5,6 +5,13 @@
       <configuration>
         <fileset id="fileset1" name="server" removed="false">
           <file>file://$MODULE_DIR$/src/META-INF/build-server-plugin-static-ui-extensions.xml</file>
+          <file>file://$MODULE_DIR$/fake-spring.xml</file>
+          <file>jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/server.jar!/META-INF/buildServerSpring.xml</file>
+          <file>jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/server.jar!/META-INF/buildServerPermissions.xml</file>
+          <file>file://$TeamCityDistribution$/webapps/ROOT/WEB-INF/buildServerSpringWeb.xml</file>
+          <file>file://$TeamCityDistribution$/webapps/ROOT/WEB-INF/buildServerPluginsSupportWeb.xml</file>
+          <file>file://$TeamCityDistribution$/webapps/ROOT/WEB-INF/buildServerConfigurator.xml</file>
+          <file>jar://$TeamCityDistribution$/webapps/ROOT/WEB-INF/lib/server.jar!/META-INF/buildServerSpringMetadata.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -28,6 +35,7 @@
     <orderEntry type="library" name="Server-Api" level="project" />
     <orderEntry type="library" name="Idea-OpenApi" level="project" />
     <orderEntry type="library" name="idea annotations.jar" level="project" />
+    <orderEntry type="library" name="TeamCity server runtime" level="project" />
   </component>
 </module>
 

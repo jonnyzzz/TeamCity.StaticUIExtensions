@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package jetbrains.buildServer.staticUIExtensions;
+package jetbrains.buildServer.staticUIExtensions.config;
 
+import jetbrains.buildServer.staticUIExtensions.ConfigurationException;
+import jetbrains.buildServer.staticUIExtensions.PagePlacesCollector;
 import jetbrains.buildServer.staticUIExtensions.model.*;
 import jetbrains.buildServer.util.FileUtil;
 import jetbrains.buildServer.util.StringUtil;
@@ -99,7 +101,7 @@ public class ConfigurationReader {
         matchers.add(new AndMatcher(childMatch));
       }
 
-      result.add(new Rule(new OrMatcher(matchers), place, content));
+      result.add(new Rule("_" + result.size(), new OrMatcher(matchers), place, content));
     }
     return result;
   }

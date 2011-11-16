@@ -5,5 +5,20 @@
        default-autowire="constructor">
 
   <bean class="jetbrains.buildServer.staticUIExtensions.PagePlacesCollector"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.PagePlacesInitializer"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.ConfigurationListener"/>
+
+
+  <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationImpl"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationWatcher"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationReader"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationWatcherRegistrar"/>
+
+
+  <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentController"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentManager"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.web.RulePageExtensionsFactory"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.web.ControllerPaths"/>
+
 </beans>
 

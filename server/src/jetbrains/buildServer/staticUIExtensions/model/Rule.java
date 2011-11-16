@@ -24,17 +24,25 @@ import org.jetbrains.annotations.NotNull;
  *         Date: 16.11.11 18:51
  */
 public class Rule {
+  @NotNull private final String myRuleId;
   @NotNull private final UrlMatcher myUrlMatcher;
   @NotNull private final PlaceId myPlace;
   @NotNull private final StaticContent myContent;
 
 
-  public Rule(@NotNull final UrlMatcher urlMatcher,
+  public Rule(@NotNull final String id,
+              @NotNull final UrlMatcher urlMatcher,
               @NotNull final PlaceId place,
               @NotNull final StaticContent content) {
+    myRuleId = id;
     myUrlMatcher = urlMatcher;
     myPlace = place;
     myContent = content;
+  }
+
+  @NotNull
+  public String getRuleId() {
+    return myRuleId;
   }
 
   @NotNull
