@@ -44,7 +44,9 @@ public class PagePlacesCollector {
       if (Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers) && Modifier.isPublic(modifiers) && PlaceId.class.equals(field.getType())) {
         field.setAccessible(true);
         try {
-          result.put(field.getName(), (PlaceId) field.get(null));
+          final String name = field.getName();
+          if (name.endsWith("TAB") || name.endsWith("TABS")) continue;
+          result.put(name, (PlaceId) field.get(null));
         } catch (IllegalAccessException e) {
           LOG.warn("Failed to read field of " + PlaceId.class);
         }

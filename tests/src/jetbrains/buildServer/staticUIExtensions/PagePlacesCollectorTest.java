@@ -35,4 +35,12 @@ public class PagePlacesCollectorTest extends BaseTestCase {
     Assert.assertTrue(placeIds.contains(PlaceId.ALL_PAGES_FOOTER));
     Assert.assertTrue(placeIds.contains(PlaceId.ALL_PAGES_HEADER));
   }
+
+  @Test
+  public void testListPagePlacesExcludesTabs() {
+    final Collection<PlaceId> placeIds = new PagePlacesCollector().getPlaceIds().values();
+    Assert.assertTrue(placeIds.size() > 0);
+    Assert.assertFalse(placeIds.contains(PlaceId.ADMIN_SERVER_CONFIGURATION_TAB));
+    Assert.assertFalse(placeIds.contains(PlaceId.MY_TOOLS_TABS));
+  }
 }
