@@ -2,7 +2,11 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset1" name="server" removed="false">
+          <file>file://$MODULE_DIR$/src/META-INF/build-server-plugin-static-ui-extensions.xml</file>
+        </fileset>
+      </configuration>
     </facet>
     <facet type="web" name="server">
       <configuration>
@@ -19,6 +23,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Common-Api" level="project" />
+    <orderEntry type="library" name="Servlet Api" level="project" />
+    <orderEntry type="library" name="Server-Api" level="project" />
+    <orderEntry type="library" name="Idea-OpenApi" level="project" />
+    <orderEntry type="library" name="idea annotations.jar" level="project" />
   </component>
 </module>
 

@@ -183,12 +183,6 @@
       <root url="file://$PROJECT_DIR$/../buildserver/common-impl/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/common-runtime/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/common-tests/src" />
-      <root url="file://$PROJECT_DIR$/../buildserver/coverage-agent/src" />
-      <root url="file://$PROJECT_DIR$/../buildserver/coverage-agent-common/src" />
-      <root url="file://$PROJECT_DIR$/../buildserver/coverage-agent-runtime-emma/src" />
-      <root url="file://$PROJECT_DIR$/../buildserver/coverage-agent-runtime-idea/src" />
-      <root url="file://$PROJECT_DIR$/../buildserver/coverage-common/src" />
-      <root url="file://$PROJECT_DIR$/../buildserver/coverage-server/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/cvs-agent/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/cvs-common/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/cvs-support/src" />
@@ -311,7 +305,6 @@
       <root url="file://$PROJECT_DIR$/../buildserver/win32-notificator/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/win32-notificator-tests/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/xml-rpc-wrapper/src" />
-      <root url="file://$PROJECT_DIR$/../buildserver/coverage.net-server/src" />
       <root url="file://$PROJECT_DIR$/../buildserver/JavaConTest/ReadmeFiles/Demo" />
       <root url="file://$PROJECT_DIR$/../buildserver/JavaConTest/ReadmeFiles/listenerDemo" />
       <root url="file://$PROJECT_DIR$/../buildserver/serverLoad/src" />
