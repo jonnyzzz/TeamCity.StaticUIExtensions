@@ -39,17 +39,27 @@ public class ControllerPaths {
     return myResourcesControllerPath;
   }
 
-  public String getResourceControllerPathBase() {
-    return getResourceControllerRegistrationBase() +"/" + myConfig.getAccessToken();
+  @NotNull
+  public String getTokenParameter() {
+    return "token";
+  }
+
+  @NotNull
+  public String getIncludeFileParameter() {
+    return "includeFile";
+  }
+
+  public String getEmptyContentParameter() {
+    return "showEmptyContent";
   }
 
   @NotNull
   public String getResourceControllerPath(@NotNull String resource) {
-    return getResourceControllerPathBase() + "/" + resource;
+    return getResourceControllerRegistrationBase() + "?" + getTokenParameter() + "=" + myConfig.getAccessToken() +"&" + getIncludeFileParameter() + "=" + resource;
   }
 
   @NotNull
   public String getResourceControllerPathEmpty() {
-    return getResourceControllerPathBase() + "/" + myConfig.getAccessToken();
+    return getResourceControllerRegistrationBase() + "?" + getTokenParameter() + "=" + myConfig.getAccessToken() +"&" + getEmptyContentParameter() + "=42";
   }
 }

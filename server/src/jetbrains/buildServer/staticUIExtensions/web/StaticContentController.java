@@ -20,8 +20,8 @@ import jetbrains.buildServer.controllers.AuthorizationInterceptor;
 import jetbrains.buildServer.controllers.BaseController;
 import jetbrains.buildServer.staticUIExtensions.Configuration;
 import jetbrains.buildServer.util.FileUtil;
+import jetbrains.buildServer.util.StringUtil;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
-import jetbrains.buildServer.web.util.WebUtil;
 import org.apache.commons.httpclient.HttpStatus;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,7 +45,7 @@ public class StaticContentController extends BaseController {
                                  @NotNull final Configuration config) {
     myPaths = paths;
     myConfig = config;
-    final String path = paths.getResourceControllerRegistrationBase() + "/**";
+    final String path = paths.getResourceControllerRegistrationBase();
     web.registerController(path, this);
     auth.addPathNotRequiringAuth(path);
   }
@@ -53,27 +53,24 @@ public class StaticContentController extends BaseController {
   @Override
   protected ModelAndView doHandle(@NotNull final HttpServletRequest request,
                                   @NotNull final HttpServletResponse response) throws Exception {
-    String requestPath = WebUtil.getPathWithoutAuthenticationType(request);
-    if (!requestPath.startsWith("/")) requestPath = "/" + requestPath;
 
-    if (requestPath.equals(myPaths.getResourceControllerPathEmpty())) {
+    final String token = request.getParameter(myPaths.getTokenParameter());
+    if (!myConfig.getAccessToken().equals(token)) {
+      response.sendError(HttpStatus.SC_NOT_FOUND, "Path not found. Invalid access token");
       return null;
     }
 
-    final String prefixPath = myPaths.getResourceControllerPathBase();
-    if (!requestPath.startsWith(prefixPath)) {
-      response.sendError(HttpStatus.SC_NOT_FOUND, "Path not found");
+    if (request.getParameter(myPaths.getEmptyContentParameter()) != null) {
       return null;
     }
 
-    final String path = requestPath.substring(prefixPath.length()+1);
-    int slash = path.indexOf('/');
-    if (slash >= 0) {
+    final String file = request.getParameter(myPaths.getIncludeFileParameter());
+    if (StringUtil.isEmptyOrSpaces(file) || file.contains("/") || file.contains("\\") || file.contains("..")) {
       response.sendError(HttpStatus.SC_NOT_FOUND, "Path not found. Invalid path");
       return null;
     }
 
-    final File includeFile = myConfig.mapIncludeFilePath(path);
+    final File includeFile = myConfig.mapIncludeFilePath(file);
     if (includeFile == null || !includeFile.isFile()) {
       response.sendError(HttpStatus.SC_NOT_FOUND, "Path not found");
       return null;
