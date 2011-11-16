@@ -14,7 +14,7 @@ import java.util.Collection;
 public class PagePlacesCollectorTest extends BaseTestCase {
   @Test
   public void testListPagePlaces() {
-    final Collection<PlaceId> placeIds = new PagePlacesCollector().getPlaceIds();
+    final Collection<PlaceId> placeIds = new PagePlacesCollector().getPlaceIds().values();
     Assert.assertTrue(placeIds.size() > 0);
     Assert.assertTrue(placeIds.contains(PlaceId.ALL_PAGES_FOOTER));
     Assert.assertTrue(placeIds.contains(PlaceId.ALL_PAGES_HEADER));

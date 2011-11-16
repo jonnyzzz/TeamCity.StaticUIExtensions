@@ -3,13 +3,11 @@ package jetbrains.buildServer.staticUIExtensions;
 import com.intellij.openapi.diagnostic.Logger;
 import jetbrains.buildServer.web.openapi.PlaceId;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
@@ -18,35 +16,47 @@ import java.util.List;
 public class PagePlacesCollector {
   private static final Logger LOG = Logger.getInstance(PagePlacesCollector.class.getName());
 
-  private Collection<PlaceId> myPlaces;
+  private Map<String, PlaceId> myPlaces;
 
   @NotNull
-  private Collection<PlaceId> listAllPagePlaces() {
+  private Map<String, PlaceId> listAllPagePlaces() {
     final Field[] fields = PlaceId.class.getDeclaredFields();
-    List<PlaceId> result = new ArrayList<PlaceId>();
+    Map<String, PlaceId> result = new TreeMap<String, PlaceId>();
 
     for (Field field : fields) {
       final int modifiers = field.getModifiers();
       if (Modifier.isStatic(modifiers) && Modifier.isFinal(modifiers) && Modifier.isPublic(modifiers) && PlaceId.class.equals(field.getType())) {
         field.setAccessible(true);
         try {
-          result.add((PlaceId)field.get(null));
+          result.put(field.getName(), (PlaceId) field.get(null));
         } catch (IllegalAccessException e) {
           LOG.warn("Failed to read field of " + PlaceId.class);
         }
       }
     }
-    return Collections.unmodifiableCollection(result);
+    return Collections.unmodifiableMap(result);
   }
 
 
   @NotNull
-  public Collection<PlaceId> getPlaceIds() {
+  public Map<String, PlaceId> getPlaceIds() {
     if (myPlaces == null) {
       myPlaces = listAllPagePlaces();
     }
     return myPlaces;
   }
 
+  @Nullable
+  public PlaceId findByName(@Nullable String placeId) {
+    if (placeId == null) return null;
+    placeId = placeId.trim();
 
+    for (Map.Entry<String, PlaceId> e : getPlaceIds().entrySet()) {
+      if (e.getKey().equalsIgnoreCase(placeId)) {
+        return e.getValue();
+      }
+    }
+
+    return null;
+  }
 }
