@@ -66,7 +66,7 @@ public class StaticContentController extends BaseController {
       return null;
     }
 
-    final String path = requestPath.substring(prefixPath.length());
+    final String path = requestPath.substring(prefixPath.length()+1);
     int slash = path.indexOf('/');
     if (slash >= 0) {
       response.sendError(HttpStatus.SC_NOT_FOUND, "Path not found. Invalid path");
