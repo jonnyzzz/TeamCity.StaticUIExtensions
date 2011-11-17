@@ -62,7 +62,7 @@ public class DefaultFilesInitializer {
     FileUtil.copyResourceWithDist(getClass(), "/static-ui-extensions.xml", config);
 
     if (usesDefaultConfig(config)) {
-      for (String name : Arrays.asList("header.html", "footer.html", "beforeContent.html")) {
+      for (String name : Arrays.asList("default.header.html", "default.footer.html", "default.beforeContent.html")) {
         final File file = new File(myConfig.getIncludeFilesBase(), name);
         if (!file.isFile()) {
           FileUtil.copyResource(getClass(), "/" + name, file);

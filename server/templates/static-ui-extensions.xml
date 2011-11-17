@@ -1,10 +1,10 @@
 <?xml version="1.0" ?>
 <teamcity-static-ui-extensions>
-  <rule place-id="ALL_PAGES_HEADER" html-file="header.html"/>
+  <rule place-id="ALL_PAGES_HEADER" html-file="default.header.html"/>
 
-  <rule place-id="ALL_PAGES_FOOTER" html-file="footer.html"/>
+  <rule place-id="ALL_PAGES_FOOTER" html-file="default.footer.html"/>
 
-  <rule place-id="BEFORE_CONTENT" html-file="beforeContent.html">
+  <rule place-id="BEFORE_CONTENT" html-file="default.beforeContent.html">
     <url equals=""/>
     <url starts="overview.html"/>
   </rule>
