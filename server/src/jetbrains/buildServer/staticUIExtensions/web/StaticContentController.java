@@ -16,6 +16,7 @@
 
 package jetbrains.buildServer.staticUIExtensions.web;
 
+import com.intellij.openapi.diagnostic.Logger;
 import jetbrains.buildServer.controllers.AuthorizationInterceptor;
 import jetbrains.buildServer.controllers.BaseController;
 import jetbrains.buildServer.staticUIExtensions.Configuration;
@@ -36,6 +37,8 @@ import java.io.IOException;
  *         Date: 16.11.11 19:47
  */
 public class StaticContentController extends BaseController {
+  private static final Logger LOG = Logger.getInstance(StaticContentController.class.getName());
+
   private ControllerPaths myPaths;
   private final Configuration myConfig;
   private final StaticContentCache myCache;
@@ -67,13 +70,16 @@ public class StaticContentController extends BaseController {
       return null;
     }
 
+    //TODO: allow directories, may use Util from TeamCity for that
     final String file = request.getParameter(myPaths.getIncludeFileParameter());
     if (StringUtil.isEmptyOrSpaces(file) || file.contains("/") || file.contains("\\") || file.contains("..")) {
+      LOG.warn("Failed to open file to include by invalid path: " + file + ".");
       return sendError(request, response, "Path not found. Invalid path: " + file);
     }
 
     final File includeFile = myConfig.mapIncludeFilePath(file);
     if (includeFile == null || !includeFile.isFile()) {
+      LOG.warn("Failed to open file to include: " + includeFile + ".");
       return sendError(request, response, "Path not found: " + file);
     }
 
@@ -81,6 +87,7 @@ public class StaticContentController extends BaseController {
     try {
       data = myCache.getContent(includeFile);
     } catch (IOException e) {
+      LOG.warn("Failed to open file to include: " + includeFile + ". " + e.getMessage(), e);
       return sendError(request, response, "Failed to open file: " + includeFile.getName());
     }
 
