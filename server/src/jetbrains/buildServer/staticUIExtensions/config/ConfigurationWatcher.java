@@ -16,6 +16,7 @@
 
 package jetbrains.buildServer.staticUIExtensions.config;
 
+import com.intellij.openapi.diagnostic.Logger;
 import jetbrains.buildServer.configuration.ChangeListener;
 import jetbrains.buildServer.configuration.FileWatcher;
 import jetbrains.buildServer.staticUIExtensions.Configuration;
@@ -29,6 +30,8 @@ import java.util.Collection;
  *         Date: 16.11.11 20:09
  */
 public class ConfigurationWatcher {
+  private static final Logger LOG = Logger.getInstance(ConfigurationWatcher.class.getName());
+
   private final FileWatcher myConfigWatcher;
   @NotNull
   private final Configuration myConfig;
@@ -48,6 +51,10 @@ public class ConfigurationWatcher {
     });
   }
 
+  public void setCheckInterval(int interval) {
+    myConfigWatcher.setSleepingPeriod(interval);
+  }
+
   public void startWatching() {
     configurationFileChanged();
     myConfigWatcher.start();
@@ -58,7 +65,7 @@ public class ConfigurationWatcher {
   }
 
   private void configurationFileChanged() {
-    if (!myConfig.getConfigurationXml().isFile()) return;
+    LOG.info("Detected change in " + myConfig.getConfigurationXml() + ". StaticUIExtensions config will be reloaded. ");
     for (ConfigurationChangeListener listener : myListeners) {
       listener.configurationChanged();
     }

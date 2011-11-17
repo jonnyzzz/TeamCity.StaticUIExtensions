@@ -5,13 +5,13 @@
        default-autowire="constructor">
 
   <bean class="jetbrains.buildServer.staticUIExtensions.PagePlacesCollector"/>
-  <bean class="jetbrains.buildServer.staticUIExtensions.PagePlacesInitializer"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.PagePlacesInitializerImpl"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.ConfigurationListener"/>
 
 
   <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationImpl"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationWatcher"/>
-  <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationReader"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationReaderImpl"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.config.DefaultFilesInitializer"/>
 
   <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationWatcherRegistrar"/>

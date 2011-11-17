@@ -21,6 +21,7 @@ import jetbrains.buildServer.staticUIExtensions.config.ConfigurationReader;
 import jetbrains.buildServer.staticUIExtensions.model.Rule;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -51,10 +52,13 @@ public class ConfigurationListener implements ConfigurationChangeListener {
 
   @NotNull
   private Collection<Rule> parseConfigs() {
-    try {
-      return myReader.parseConfiguration(myConfiguration.getConfigurationXml());
-    } catch (ConfigurationException e) {
-      LOG.warn("Failed to parse configuration file: " + e.getMessage(), e);
+    final File xml = myConfiguration.getConfigurationXml();
+    if (xml.isFile()) {
+      try {
+        return myReader.parseConfiguration(xml);
+      } catch (ConfigurationException e) {
+        LOG.warn("Failed to parse configuration file: " + e.getMessage(), e);
+      }
     }
     return Collections.emptyList();
   }

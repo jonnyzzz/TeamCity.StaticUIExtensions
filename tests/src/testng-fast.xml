@@ -6,6 +6,8 @@
       <class name="jetbrains.buildServer.staticUIExtensions.PagePlacesCollectorTest"/>
       <class name="jetbrains.buildServer.staticUIExtensions.ConfigurationReaderTest"/>
       <class name="jetbrains.buildServer.staticUIExtensions.RulePageExtensionTest"/>
+      <class name="jetbrains.buildServer.staticUIExtensions.ConfigurationWatcherTest"/>
+      <class name="jetbrains.buildServer.staticUIExtensions.ConfigurationListenerTest"/>
     </classes>
   </test>
 </suite>

@@ -18,6 +18,7 @@ package jetbrains.buildServer.staticUIExtensions;
 
 import jetbrains.buildServer.BaseTestCase;
 import jetbrains.buildServer.staticUIExtensions.config.ConfigurationReader;
+import jetbrains.buildServer.staticUIExtensions.config.ConfigurationReaderImpl;
 import jetbrains.buildServer.staticUIExtensions.model.Rule;
 import jetbrains.buildServer.web.openapi.PlaceId;
 import org.testng.Assert;
@@ -39,7 +40,7 @@ public class ConfigurationReaderTest extends BaseTestCase {
   protected void setUp() throws Exception {
     super.setUp();
     myCollector = new PagePlacesCollector();
-    myReader = new ConfigurationReader(myCollector);
+    myReader = new ConfigurationReaderImpl(myCollector);
   }
 
   @Test
