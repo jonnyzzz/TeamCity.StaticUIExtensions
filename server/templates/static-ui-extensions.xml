@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<teamcity-static-ui-extensions>
+  <rule place-id="ALL_PAGES_HEADER" html-file="header.html"/>
+  <rule place-id="ALL_PAGES_FOOTER" html-file="footer.html"/>
+
+
+  <!-- 
+     you may include HTML, css or js contents with page places 
+
+     <rule place-id="[put place id here]" 
+           html-file="[put html file from this folder]"
+           js-file="[put js file from this folder]"
+           css-files="[put css file from this folder]">
+         
+         this is the rule to make page place work only for URLs that starts with
+         <url starts="overview.html" />
+
+         this is the rule to only include content if URL is equal to 
+         <url equals="viewType.html" />
+
+         you may add as much rules as you like.
+
+     </rule>
+
+    The full list of page extensions is available at:
+    http://javadoc.jetbrains.net/teamcity/openapi/current/jetbrains/buildServer/web/openapi/PlaceId.html
+
+    This plugin supports the following:
+
+    @@@PAGE_PLACES@@@
+  -->
+
+</teamcity-static-ui-extensions>
+
+
+
+
+
+
+
