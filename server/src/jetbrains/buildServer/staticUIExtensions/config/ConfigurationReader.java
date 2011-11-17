@@ -20,7 +20,7 @@ import jetbrains.buildServer.staticUIExtensions.ConfigurationException;
 import jetbrains.buildServer.staticUIExtensions.PagePlacesCollector;
 import jetbrains.buildServer.staticUIExtensions.model.*;
 import jetbrains.buildServer.util.FileUtil;
-import jetbrains.buildServer.util.StringUtil;
+import jetbrains.buildServer.util.XmlUtil;
 import jetbrains.buildServer.web.openapi.PlaceId;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -68,14 +68,14 @@ public class ConfigurationReader {
 
       final StaticContent content = new StaticContent(html, js, css);
       if (!content.isValid()) {
-        throw new ConfigurationException("Rule does not contain any file to include. " + xmlRule.toString());
+        throw new ConfigurationException("Rule does not contain any file to include. " + XmlUtil.to_s(xmlRule));
       }
 
       final String placeId = xmlRule.getAttributeValue("place-id");
 
       final PlaceId place = myCollector.findByName(placeId);
       if (placeId == null) {
-        throw new ConfigurationException("Rule contains unparseable place-id: " + placeId);
+        throw new ConfigurationException("Rule contains unknown place-id: " + XmlUtil.to_s(xmlRule));
       }
 
       final List<UrlMatcher> matchers = new ArrayList<UrlMatcher>();
@@ -85,17 +85,17 @@ public class ConfigurationReader {
         final List<UrlMatcher> childMatch = new ArrayList<UrlMatcher>();
 
         final String startsWith = xmlUrl.getAttributeValue("starts");
-        if (!StringUtil.isEmptyOrSpaces(startsWith)) {
+        if (startsWith != null) {
           childMatch.add(new StartsWithMatcher(startsWith.trim()));
         }
 
         final String equals = xmlUrl.getAttributeValue("equals");
-        if (!StringUtil.isEmptyOrSpaces(equals)) {
+        if (equals != null) {
           childMatch.add(new EqualsMatcher(equals.trim()));
         }
 
         if (childMatch.isEmpty()) {
-          throw new ConfigurationException("No url matching rules found: " + xmlUrl);
+          throw new ConfigurationException("No url matching rules found: " + XmlUtil.to_s(xmlUrl));
         }
 
         matchers.add(new AndMatcher(childMatch));

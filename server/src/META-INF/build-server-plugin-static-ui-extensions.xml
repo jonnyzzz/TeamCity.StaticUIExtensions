@@ -12,15 +12,19 @@
   <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationImpl"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationWatcher"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationReader"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.config.DefaultFilesInitializer"/>
+
   <bean class="jetbrains.buildServer.staticUIExtensions.config.ConfigurationWatcherRegistrar"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.config.DefaultFilesInitializerRegistrar"/>
 
 
   <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentController"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentManager"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentCache"/>
-  <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentCacheRegistrar"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.web.RulePageExtensionsFactory"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.web.ControllerPaths"/>
+
+  <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentCacheRegistrar"/>
 
 </beans>
 

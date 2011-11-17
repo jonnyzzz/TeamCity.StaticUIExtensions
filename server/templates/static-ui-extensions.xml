@@ -1,8 +1,13 @@
 <?xml version="1.0" ?>
 <teamcity-static-ui-extensions>
   <rule place-id="ALL_PAGES_HEADER" html-file="header.html"/>
+
   <rule place-id="ALL_PAGES_FOOTER" html-file="footer.html"/>
 
+  <rule place-id="BEFORE_CONTENT" html-file="beforeContent.html">
+    <url equals=""/>
+    <url starts="overview.html"/>
+  </rule>
 
   <!-- 
      you may include HTML, css or js contents with page places 
@@ -18,16 +23,13 @@
          this is the rule to only include content if URL is equal to 
          <url equals="viewType.html" />
 
-         you may add as much rules as you like.
-
+         you may add as much rules / url constraints as you like.
      </rule>
 
     The full list of page extensions is available at:
     http://javadoc.jetbrains.net/teamcity/openapi/current/jetbrains/buildServer/web/openapi/PlaceId.html
 
-    This plugin supports the following:
-
-    @@@PAGE_PLACES@@@
+    The full list of supported page places you may find in: page-places-list.txt
   -->
 
 </teamcity-static-ui-extensions>

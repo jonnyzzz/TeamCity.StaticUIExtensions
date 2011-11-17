@@ -25,6 +25,8 @@ import jetbrains.buildServer.web.util.WebUtil;
 import org.jetbrains.annotations.NotNull;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eugene Petrenko (eugene.petrenko@gmail.com)
@@ -68,9 +70,27 @@ public class RulePageExtension extends SimplePageExtension {
   public boolean isAvailable(@NotNull HttpServletRequest request) {
     if (!super.isAvailable(request)) return false;
 
-    String requestPath = WebUtil.getPathWithoutAuthenticationType(request);
-    if (!requestPath.startsWith("/")) requestPath = requestPath.substring(1);
+    List<String> urls = new ArrayList<String>(4);
+    final Object oUrl = request.getAttribute("pageUrl");
+    if (oUrl instanceof String) {
+      final String url = WebUtil.getPathWithoutContext(request, (String) oUrl);
+      if (url.startsWith(WebUtil.HTTP_AUTH_PREFIX)) {
+        urls.add(url.substring(WebUtil.HTTP_AUTH_PREFIX.length()));
+      }
+      if (url.startsWith(WebUtil.GUEST_AUTH_PREFIX)) {
+        urls.add(url.substring(WebUtil.GUEST_AUTH_PREFIX.length()));
+      }
+      urls.add(url);
+    }
+    urls.add(WebUtil.getPathWithoutAuthenticationType(request));
 
-    return myRule.getUrlMatcher().matches(requestPath);
+    for (String _url : urls) {
+      String url = _url;
+      if (url.startsWith("/")) url = url.substring(1);
+
+      if (myRule.getUrlMatcher().matches(url)) return true;
+    }
+
+    return false;
   }
 }
