@@ -57,12 +57,12 @@ public class RulePageExtension extends SimplePageExtension {
 
     final String js = content.getJS();
     if (js != null) {
-      addJsFile(js);
+      addJsFile(paths.getResourceControllerPath(js));
     }
 
     final String css = content.getCSS();
     if (css != null) {
-      addCssFile(css);
+      addCssFile(paths.getResourceControllerPath(css));
     }
   }
 
