@@ -16,6 +16,7 @@
 
 package jetbrains.buildServer.staticUIExtensions.web;
 
+import com.intellij.openapi.diagnostic.Logger;
 import jetbrains.buildServer.configuration.ChangeListener;
 import jetbrains.buildServer.configuration.FilesWatcher;
 import jetbrains.buildServer.util.CollectionsUtil;
@@ -34,6 +35,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *         Date: 17.11.11 12:29
  */
 public class StaticContentCache {
+  private static final Logger LOG = Logger.getInstance(StaticContentCache.class.getName());
+
   private final FilesWatcher myWatcher;
   private final Map<File, Entry> myCache = new ConcurrentHashMap<File, Entry>();
 
@@ -48,9 +51,9 @@ public class StaticContentCache {
 
     myWatcher.registerListener(new ChangeListener() {
       public void changeOccured(String requestor) {
-        for (File file : CollectionsUtil.join(myWatcher.getModifiedFiles(), myWatcher.getRemovedFiles()))
-        {
-          myCache.remove(file);
+        for (File file : CollectionsUtil.join(myWatcher.getModifiedFiles(), myWatcher.getRemovedFiles())) {
+          LOG.info("Detected change in " + file + ".");
+          removeEntry(file);
         }
       }
     });
