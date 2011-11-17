@@ -23,6 +23,7 @@ import jetbrains.buildServer.util.StringUtil;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
 import org.apache.commons.httpclient.HttpStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,6 +88,7 @@ public class StaticContentController extends BaseController {
     return null;
   }
 
+  @Nullable
   private ModelAndView sendError(@NotNull final HttpServletRequest request,
                                  @NotNull final HttpServletResponse response,
                                  @NotNull final String errorMessage) throws IOException {
