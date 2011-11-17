@@ -38,17 +38,22 @@ public class ConfigurationImpl implements Configuration {
 
   @NotNull
   public File getConfigurationXml() {
-    return new File(myPaths.getConfigDir(), "static-ui-extensions.xml");
+    return new File(getIncludeFilesBase(), "static-ui-extensions.xml");
   }
 
   public File mapIncludeFilePath(@NotNull String path) {
     if (path.contains("/") || path.contains("\\") || path.contains("..")) return null;
 
-    final File map = new File(new File(myPaths.getConfigDir(), "_static_ui_extensions"), path);
+    final File map = new File(getIncludeFilesBase(), path);
     if (map.isFile()) {
       return map;
     }
     return null;
+  }
+
+  @NotNull
+  public File getIncludeFilesBase() {
+    return new File(myPaths.getConfigDir(), "_static_ui_extensions");
   }
 
   @NotNull
