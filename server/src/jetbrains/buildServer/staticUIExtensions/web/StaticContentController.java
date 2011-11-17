@@ -73,13 +73,14 @@ public class StaticContentController extends BaseController {
     //TODO: allow directories, may use Util from TeamCity for that
     final String file = request.getParameter(myPaths.getIncludeFileParameter());
     if (StringUtil.isEmptyOrSpaces(file) || file.contains("/") || file.contains("\\") || file.contains("..")) {
-      LOG.warn("Failed to open file to include by invalid path: " + file + ".");
-      return sendError(request, response, "Path not found. Invalid path: " + file);
+      final String message = "Failed to open file to include by invalid path: " + (file == null ? "no file specified" : file) + ".";
+      LOG.warn(message);
+      return sendError(request, response, message);
     }
 
     final File includeFile = myConfig.mapIncludeFilePath(file);
     if (includeFile == null || !includeFile.isFile()) {
-      LOG.warn("Failed to open file to include: " + includeFile + ".");
+      LOG.warn("Failed to open file to include: " + (includeFile != null ? includeFile : file) + ".");
       return sendError(request, response, "Path not found: " + file);
     }
 
