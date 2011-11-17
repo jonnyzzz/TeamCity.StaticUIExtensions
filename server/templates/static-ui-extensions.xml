@@ -1,9 +1,5 @@
 <?xml version="1.0" ?>
 <teamcity-static-ui-extensions>
-  <rule place-id="ALL_PAGES_HEADER" html-file="default.header.html"/>
-
-  <rule place-id="ALL_PAGES_FOOTER" html-file="default.footer.html"/>
-
   <rule place-id="BEFORE_CONTENT" html-file="default.beforeContent.html">
     <url equals=""/>
     <url starts="overview.html"/>
@@ -29,7 +25,7 @@
     The full list of page extensions is available at:
     http://javadoc.jetbrains.net/teamcity/openapi/current/jetbrains/buildServer/web/openapi/PlaceId.html
 
-    The full list of supported page places you may find in: page-places-list.txt
+    @@@PAGE_PLACES_LIST@@@
   -->
 
 </teamcity-static-ui-extensions>

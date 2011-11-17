@@ -44,7 +44,6 @@ public class DefaultFilesInitializer {
   public void writeInitialFiles() {
     createPluginDirectory();
     writeDistConfig();
-    updatePagePlacesList();
   }
 
   private void createPluginDirectory() {
@@ -56,13 +55,18 @@ public class DefaultFilesInitializer {
     }
   }
 
-
-  public void writeDistConfig() {
+  private void writeDistConfig() {
     final File config = myConfig.getConfigurationXml();
-    FileUtil.copyResourceWithDist(getClass(), "/static-ui-extensions.xml", config);
+    final File distConfig = new File(myConfig.getConfigurationXml() + ".dist");
 
-    if (usesDefaultConfig(config)) {
-      for (String name : Arrays.asList("default.header.html", "default.footer.html", "default.beforeContent.html")) {
+    final boolean useDefaultConfigs = usesDefaultConfig(config);
+
+    updateDistConfig(distConfig);
+
+    if (useDefaultConfigs) {
+      updateConfig(config, distConfig);
+
+      for (String name : Arrays.asList("default.beforeContent.html")) {
         final File file = new File(myConfig.getIncludeFilesBase(), name);
         if (!file.isFile()) {
           FileUtil.copyResource(getClass(), "/" + name, file);
@@ -71,16 +75,32 @@ public class DefaultFilesInitializer {
     }
   }
 
+  private void updateConfig(File config, File distConfig) {
+    try {
+      FileUtil.copy(distConfig, config);
+    } catch (IOException e) {
+      LOG.warn("Failed to copy ");
+    }
+  }
+
+  private void updateDistConfig(File distConfig) {
+    try {
+      FileUtil.copyResource(getClass(), "/static-ui-extensions.xml", distConfig);
+      String configText = new String(FileUtil.loadFileText(distConfig, "utf-8"));
+      configText = configText.replaceAll("@@@PAGE_PLACES_LIST@@@", generatePagePlaces());
+      FileUtil.writeFile(distConfig, configText);
+    } catch (IOException e) {
+      LOG.warn("Failed to update " + distConfig + ". " + e.getMessage(), e);
+    }
+  }
+
   private boolean usesDefaultConfig(File config) {
+    if (!config.exists()) return true;
     try {
       return FileUtil.readText(config).equals(FileUtil.readText(new File(config.getPath() + ".dist")));
     } catch(IOException e) {
       return false;
     }
-  }
-
-  private void updatePagePlacesList() {
-    FileUtil.writeFile(new File(myConfig.getIncludeFilesBase(), "page-places-list.txt"), generatePagePlaces());
   }
 
   @NotNull
