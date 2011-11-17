@@ -68,27 +68,29 @@ public class StaticContentController extends BaseController {
 
     final String file = request.getParameter(myPaths.getIncludeFileParameter());
     if (StringUtil.isEmptyOrSpaces(file) || file.contains("/") || file.contains("\\") || file.contains("..")) {
-      response.sendError(HttpStatus.SC_NOT_FOUND, "Path not found. Invalid path");
-      return null;
+      return sendError(request, response, "Path not found. Invalid path: " + file);
     }
 
     final File includeFile = myConfig.mapIncludeFilePath(file);
     if (includeFile == null || !includeFile.isFile()) {
-      response.sendError(HttpStatus.SC_NOT_FOUND, "Path not found");
-      return null;
+      return sendError(request, response, "Path not found: " + file);
     }
 
     final char[] data;
     try {
       data = myCache.getContent(includeFile);
     } catch (IOException e) {
-      response.sendError(HttpStatus.SC_NOT_FOUND, "Failed to open file.");
-      return null;
+      return sendError(request, response, "Failed to open file: " + includeFile.getName());
     }
 
     response.getWriter().write(data);
     return null;
   }
 
-
+  private ModelAndView sendError(@NotNull final HttpServletRequest request,
+                                 @NotNull final HttpServletResponse response,
+                                 @NotNull final String errorMessage) throws IOException {
+    response.getWriter().write("ERROR: Content for StaticUIContent plugin was not found. " + errorMessage);
+    return null;
+  }
 }
