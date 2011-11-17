@@ -4,8 +4,8 @@
   <info>
     <name>StaticUIExtensions</name>
     <display-name>Static UI Extensions</display-name>
-    <description>Adds static content to TeamCity pages</description>
     <version>@Plugin_Version@</version> <!-- will be replaced from script -->
+    <description>Adds static content to TeamCity pages</description>
     <vendor>
       <name>@Plugin_Vendor@</name>  <!-- will be replaced from script -->
       <url>@Plugin_Vendor_Url@</url> <!-- will be replaced from script -->
