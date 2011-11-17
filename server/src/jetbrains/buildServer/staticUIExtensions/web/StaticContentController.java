@@ -99,7 +99,7 @@ public class StaticContentController extends BaseController {
   private ModelAndView sendError(@NotNull final HttpServletRequest request,
                                  @NotNull final HttpServletResponse response,
                                  @NotNull final String errorMessage) throws IOException {
-    response.getWriter().write("ERROR: Content for StaticUIContent plugin was not found. " + errorMessage);
+    response.getWriter().write("ERROR: Content for StaticUIExtensions plugin was not found. " + errorMessage);
     return null;
   }
 }
