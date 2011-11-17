@@ -66,7 +66,7 @@ public class DefaultFilesInitializer {
     if (useDefaultConfigs) {
       updateConfig(config, distConfig);
 
-      for (String name : Arrays.asList("default.beforeContent.html")) {
+      for (String name : Arrays.asList("beforeContent.html")) {
         final File file = new File(myConfig.getIncludeFilesBase(), name);
         if (!file.isFile()) {
           FileUtil.copyResource(getClass(), "/" + name, file);
@@ -107,11 +107,10 @@ public class DefaultFilesInitializer {
   private String generatePagePlaces() {
     StringBuilder sb = new StringBuilder();
     final String newLine = System.getProperty("line.separator", "\r\n");
-    final String gap = "  - ";
+    final String gap = "      - ";
 
     sb.append(newLine);
-    sb.append("This is auto generated file. DO NOT EDIT!").append(newLine);
-    sb.append("Supported page places are: ").append(newLine);
+    sb.append("    Supported values for place-id are: ").append(newLine);
 
     for (String placeId : myCollector.getPlaceIds().keySet()) {
       sb.append(gap);

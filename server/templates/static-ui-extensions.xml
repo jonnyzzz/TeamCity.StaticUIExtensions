@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <teamcity-static-ui-extensions>
-  <rule place-id="BEFORE_CONTENT" html-file="default.beforeContent.html">
+  <rule place-id="BEFORE_CONTENT" html-file="beforeContent.html">
     <url equals=""/>
     <url starts="overview.html"/>
   </rule>
