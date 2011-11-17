@@ -22,6 +22,7 @@ import jetbrains.buildServer.util.FileUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
 /**
@@ -57,13 +58,24 @@ public class DefaultFilesInitializer {
 
 
   public void writeDistConfig() {
-    FileUtil.copyResourceWithDist(getClass(), "/static-ui-extensions.xml", myConfig.getConfigurationXml());
+    final File config = myConfig.getConfigurationXml();
+    FileUtil.copyResourceWithDist(getClass(), "/static-ui-extensions.xml", config);
 
-    for (String name : Arrays.asList("header.html", "footer.html", "beforeContent.html")) {
-      final File file = new File(myConfig.getIncludeFilesBase(), name);
-      if (!file.isFile()) {
-        FileUtil.copyResource(getClass(), "/" + name, file);
+    if (usesDefaultConfig(config)) {
+      for (String name : Arrays.asList("header.html", "footer.html", "beforeContent.html")) {
+        final File file = new File(myConfig.getIncludeFilesBase(), name);
+        if (!file.isFile()) {
+          FileUtil.copyResource(getClass(), "/" + name, file);
+        }
       }
+    }
+  }
+
+  private boolean usesDefaultConfig(File config) {
+    try {
+      return FileUtil.readText(config).equals(FileUtil.readText(new File(config.getPath() + ".dist")));
+    } catch(IOException e) {
+      return false;
     }
   }
 
