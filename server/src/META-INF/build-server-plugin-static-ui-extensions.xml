@@ -17,6 +17,8 @@
 
   <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentController"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentManager"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentCache"/>
+  <bean class="jetbrains.buildServer.staticUIExtensions.web.StaticContentCacheRegistrar"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.web.RulePageExtensionsFactory"/>
   <bean class="jetbrains.buildServer.staticUIExtensions.web.ControllerPaths"/>
 

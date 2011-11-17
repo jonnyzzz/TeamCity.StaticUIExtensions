@@ -19,7 +19,6 @@ package jetbrains.buildServer.staticUIExtensions.web;
 import jetbrains.buildServer.controllers.AuthorizationInterceptor;
 import jetbrains.buildServer.controllers.BaseController;
 import jetbrains.buildServer.staticUIExtensions.Configuration;
-import jetbrains.buildServer.util.FileUtil;
 import jetbrains.buildServer.util.StringUtil;
 import jetbrains.buildServer.web.openapi.WebControllerManager;
 import org.apache.commons.httpclient.HttpStatus;
@@ -38,13 +37,16 @@ import java.io.IOException;
 public class StaticContentController extends BaseController {
   private ControllerPaths myPaths;
   private final Configuration myConfig;
+  private final StaticContentCache myCache;
 
   public StaticContentController(@NotNull final AuthorizationInterceptor auth,
                                  @NotNull final WebControllerManager web,
                                  @NotNull final ControllerPaths paths,
-                                 @NotNull final Configuration config) {
+                                 @NotNull final Configuration config,
+                                 @NotNull final StaticContentCache cache) {
     myPaths = paths;
     myConfig = config;
+    myCache = cache;
     final String path = paths.getResourceControllerRegistrationBase();
     web.registerController(path, this);
     auth.addPathNotRequiringAuth(path);
@@ -78,7 +80,7 @@ public class StaticContentController extends BaseController {
 
     final char[] data;
     try {
-      data = FileUtil.loadFileText(includeFile, "utf-8");
+      data = myCache.getContent(includeFile);
     } catch (IOException e) {
       response.sendError(HttpStatus.SC_NOT_FOUND, "Failed to open file.");
       return null;
