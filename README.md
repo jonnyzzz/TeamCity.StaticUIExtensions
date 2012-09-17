@@ -21,7 +21,7 @@ Usage:
 
 Configuration file of plugin is available under: 
 
-  [TeamCity Data Directory]/config/_static_ui_extensions/static-ui-extensions.xml
+    [TeamCity Data Directory]/config/_static_ui_extensions/static-ui-extensions.xml
 
 
 In the configuration file you may specify page place and static file that is included.
@@ -29,21 +29,24 @@ HTML, css or js resources are supported.
 
 
 This is a sample rule:
-
+```xml
      <rule place-id="[put place id here]" 
            html-file="[put html file from this folder]"
            js-file="[put js file from this folder]"
            css-files="[put css file from this folder]">
          
-         this is the rule to make page place work only for URLs that starts with
+         <!-- this is the rule to make page place work only for URLs that starts with -->
          <url starts="overview.html" />
 
-         this is the rule to only include content if URL is equal to 
+         <!-- use empty path to match all pages -->
+         <url starts="" />
+
+         <!-- this is the rule to only include content if URL is equal to  -->
          <url equals="viewType.html" />
 
          you may add as much rules / url constraints as you like.
      </rule>
-
+```
 
 The full list of page extensions is available at:
 http://javadoc.jetbrains.net/teamcity/openapi/current/jetbrains/buildServer/web/openapi/PlaceId.html
