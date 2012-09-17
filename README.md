@@ -17,11 +17,11 @@ You may also need to set up TeamCityDistribution path variable in IDEA to point 
 unpacked .exe or .tar.gz TeamCity distribution. 
 
 Usage:
-=======
+======
 
 Configuration file of plugin is available under: 
 
-[TeamCity Data Directory]/config/_static_ui_extensions/static-ui-extensions.xml
+  [TeamCity Data Directory]/config/_static_ui_extensions/static-ui-extensions.xml
 
 
 In the configuration file you may specify page place and static file that is included.
@@ -55,5 +55,7 @@ Sample usages:
 ==============
  - add google analytics to TeamCity installation
  - add instance-specific info/announcement
+ - patch TeamCity CSS/JS
+
 
 
