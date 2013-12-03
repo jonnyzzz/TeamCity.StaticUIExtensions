@@ -19,6 +19,9 @@
          this is the rule to only include content if URL is equal to 
          <url equals="viewType.html" />
 
+         this is the rule to only include content if URL contains
+         <url contains="viewType.html" />
+
          you may add as much rules / url constraints as you like.
      </rule>
 
