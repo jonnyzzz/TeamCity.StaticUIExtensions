@@ -18,6 +18,7 @@ package jetbrains.buildServer.staticUIExtensions;
 
 import jetbrains.buildServer.BaseTestCase;
 import jetbrains.buildServer.staticUIExtensions.model.Rule;
+import jetbrains.buildServer.staticUIExtensions.model.StartsWithMatcher;
 import jetbrains.buildServer.staticUIExtensions.model.StaticContent;
 import jetbrains.buildServer.staticUIExtensions.model.TrueMatcher;
 import jetbrains.buildServer.staticUIExtensions.web.ControllerPaths;
@@ -35,6 +36,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -107,5 +109,32 @@ public class RulePageExtensionTest extends BaseTestCase {
     Assert.assertEquals(ext.getCssPaths(), Collections.emptyList());
     Assert.assertEquals(ext.getJsPaths(), Collections.emptyList());
     Assert.assertEquals(ext.getIncludeUrl(), "/base/resources.html?token=token&showEmptyContent=42");
+  }
+
+  @Test
+  public void testRequestMatch() {
+    Rule r = new Rule(
+            "aaa",
+            new StartsWithMatcher("project.html?projectId=id1&tab=projectOverview"),
+            PlaceId.ALL_PAGES_HEADER,
+            new StaticContent(null, null, null));
+
+    final RulePageExtension ext = create(r);
+
+    Assert.assertTrue(ext.isAvailable(getMockRequest("project.jsp", "projectId=id1&tab=projectOverview", "")));
+    Assert.assertFalse(ext.isAvailable(getMockRequest("project.jsp", "projectId=id2&tab=projectOverview", "")));
+    Assert.assertFalse(ext.isAvailable(getMockRequest("project.jsp", "tab=projectOverview&projectId=id2", "")));
+  }
+
+  private HttpServletRequest getMockRequest(final String requestURI, final String quesryString, final String contextPath) {
+    final Mockery mockery = new Mockery();
+    final HttpServletRequest request = mockery.mock(HttpServletRequest.class);
+    mockery.checking(new Expectations() {{
+      allowing(request).getRequestURI();  will(returnValue(requestURI));
+      allowing(request).getQueryString();  will(returnValue(quesryString));
+      allowing(request).getContextPath();  will(returnValue(contextPath));
+    }}
+  );
+    return request;
   }
 }
