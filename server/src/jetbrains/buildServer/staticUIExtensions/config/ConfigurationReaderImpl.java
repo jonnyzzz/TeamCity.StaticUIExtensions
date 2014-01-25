@@ -94,6 +94,11 @@ public class ConfigurationReaderImpl implements ConfigurationReader {
           childMatch.add(new EqualsMatcher(equals.trim()));
         }
 
+        final String contains = xmlUrl.getAttributeValue("contains");
+        if (contains != null) {
+          childMatch.add(new ContainsMatcher(contains.trim()));
+        }
+
         if (childMatch.isEmpty()) {
           throw new ConfigurationException("No url matching rules found: " + XmlUtil.to_s(xmlUrl));
         }

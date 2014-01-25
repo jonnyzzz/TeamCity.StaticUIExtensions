@@ -70,27 +70,28 @@ public class RulePageExtension extends SimplePageExtension {
   public boolean isAvailable(@NotNull HttpServletRequest request) {
     if (!super.isAvailable(request)) return false;
 
-    List<String> urls = new ArrayList<String>(4);
-    final Object oUrl = request.getAttribute("pageUrl");
-    if (oUrl instanceof String) {
-      final String url = WebUtil.getPathWithoutContext(request, (String) oUrl);
-      if (url.startsWith(WebUtil.HTTP_AUTH_PREFIX)) {
-        urls.add(url.substring(WebUtil.HTTP_AUTH_PREFIX.length()));
-      }
-      if (url.startsWith(WebUtil.GUEST_AUTH_PREFIX)) {
-        urls.add(url.substring(WebUtil.GUEST_AUTH_PREFIX.length()));
-      }
-      urls.add(url);
-    }
-    urls.add(WebUtil.getPathWithoutAuthenticationType(request));
+    // consider using WebUtil.getOriginalRequestUrl since 8.1
 
-    for (String _url : urls) {
-      String url = _url;
-      if (url.startsWith("/")) url = url.substring(1);
+    //TeamCity 8.0 compatible version:
+//    String pathToMatch = WebUtil.getPathWithoutAuthenticationType(WebUtil.getPathWithoutContext(request, WebUtil.getRequestUrl(request).replace(".jsp", ".html")));
 
-      if (myRule.getUrlMatcher().matches(url)) return true;
-    }
+    //TeamCity 7.0 compatible version:
+    String pathToMatch = WebUtil.getPathWithoutAuthenticationType(WebUtil.getPathWithoutContext(request, getRequestUrl(request).replace(".jsp", ".html")));
 
-    return false;
+    if (pathToMatch.startsWith("/"))
+      pathToMatch = pathToMatch.substring(1);
+
+    return myRule.getUrlMatcher().matches(pathToMatch);
   }
+
+  @NotNull
+  public static String getRequestUrl(@NotNull HttpServletRequest request) {
+    StringBuffer url = new StringBuffer(20);
+    url.append(request.getRequestURI());
+    if (request.getQueryString() != null && request.getQueryString().length() > 0) {
+      url.append('?').append(request.getQueryString());
+    }
+    return url.toString();
+  }
+
 }

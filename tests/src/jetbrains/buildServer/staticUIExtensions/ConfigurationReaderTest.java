@@ -108,4 +108,24 @@ public class ConfigurationReaderTest extends BaseTestCase {
 
     System.out.println(rules);
   }
+
+  @Test
+  public void test_read_configuration_5_all() throws ConfigurationException {
+    final Collection<Rule> rules = myReader.parseConfiguration(Paths.getConfigsFile("config_05.xml"));
+    Assert.assertEquals(rules.size(), 1);
+    final Rule rule = rules.iterator().next();
+
+    Assert.assertEquals(rule.getContent().getCSS(), null);
+    Assert.assertEquals(rule.getContent().getHTML(), "header.html");
+    Assert.assertEquals(rule.getContent().getJS(), null);
+
+    Assert.assertEquals(rule.getPlace(), PlaceId.ALL_PAGES_HEADER);
+
+    Assert.assertEquals(rule.getUrlMatcher().matches("project.html?projectId=id111&tab=projectOverview"), true);
+    Assert.assertEquals(rule.getUrlMatcher().matches("project.html?projectId=id111&tab=projectOverview&guest=1"), true);
+    Assert.assertEquals(rule.getUrlMatcher().matches("project.html?tab=projectOverview&projectId=id111"), false);
+    Assert.assertEquals(rule.getUrlMatcher().matches(""), false);
+
+    System.out.println(rules);
+  }
 }
